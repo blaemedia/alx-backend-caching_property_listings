@@ -9,10 +9,6 @@ logger = logging.getLogger(__name__)
 
 
 def get_all_properties():
-    """
-    Fetch all properties from Redis cache or database.
-    Cache timeout: 1 hour (3600 seconds)
-    """
     queryset = cache.get("all_properties")
 
     if queryset is None:
@@ -33,8 +29,8 @@ def get_redis_cache_metrics():
         hits = info.get("keyspace_hits", 0)
         misses = info.get("keyspace_misses", 0)
 
-        total = hits + misses
-        hit_ratio = (hits / total) if total > 0 else 0.0
+        total_requests = hits + misses
+        hit_ratio = hits / total_requests if total_requests > 0 else 0
 
         metrics = {
             "keyspace_hits": hits,
@@ -52,10 +48,9 @@ def get_redis_cache_metrics():
         return metrics
 
     except Exception as exc:
-        logger.exception("Failed to retrieve Redis cache metrics: %s", exc)
+        logger.error("Error retrieving Redis cache metrics: %s", exc)
         return {
             "keyspace_hits": 0,
             "keyspace_misses": 0,
-            "hit_ratio": 0.0,
-            "error": "Unable to retrieve Redis metrics",
+            "hit_ratio": 0,
         }
