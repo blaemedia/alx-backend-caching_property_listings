@@ -1,0 +1,38 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.swp
+
+# Virtual environment
+venv/
+ENV/
+env/
+.venv/
+
+# Django
+*.sqlite3
+*.log
+db.sqlite3
+/staticfiles/
+media/
+
+# PyCharm / VSCode
+.idea/
+.vscode/
+
+# Docker
+*.env
+docker-compose.override.yml
+*.pid
+docker/*.log
+
+# macOS
+.DS_Store
+
+# Byte-compiled / cache files
+*.egg-info/
+*.eggs/
+.eggs/
+pip-log.txt
